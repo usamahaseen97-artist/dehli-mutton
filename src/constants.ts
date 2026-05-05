@@ -3,8 +3,8 @@ import { Product, Category, Deal, AppConfig } from './types';
 export const INITIAL_CONFIG: AppConfig = {
   businessName: "Dehli Mutton & Beef",
   businessNameUr: "دہلی مٹن اینڈ بیف",
-  tagline: "Fresh Daily | Halal | Quality Meat",
-  taglineUr: "روزانہ تازہ | حلال | معیاری گوشت",
+  tagline: "Quality Meat | Since 1985",
+  taglineUr: "معیاری گوشت | 1985 سے",
   whatsappNumber: "+923128535399",
   email: "dehlimuttonandbeef@gmail.com",
   phone: "0312 8535 399",
@@ -15,6 +15,8 @@ export const INITIAL_CONFIG: AppConfig = {
   bankName: "Meezan Bank",
   accountNumber: "1234-5678-9012-3456",
   accountTitle: "Dehli Mutton & Beef Center",
+  bannerUrl: "https://github.com/usamahaseen97-artist/dehli-mutton/blob/main/Gemini_Generated_Image_gi2pb9gi2pb9gi2p.png?raw=true",
+  logoUrl: "https://github.com/usamahaseen97-artist/dehli-mutton/blob/main/WhatsApp%20Image%202026-05-04%20at%205.27.51%20PM.jpeg?raw=true",
   botInstruction: "You are the official AI Assistant for Dehli Mutton & Beef. Reply in Roman Urdu + English. Help with recipes like Karahi, Qorma, Biryani. Suggest best meat cuts for specific cooking methods: Grilling/BBQ (Chops, Ribs), Roasting (Raan, Shoulder), Stewing/Gravy (Neck, Bone-in), and Quick Cooking (Qeema, Chicken). Give health tips (e.g. Chicken for sick people). Be concise and friendly. If the user language is Urdu, please respond primarily in Urdu script."
 };
 
@@ -22,7 +24,6 @@ export const CATEGORIES: Category[] = [
   { id: 'mutton', name: 'Mutton', nameUr: 'مٹن', icon: 'Beef', image: 'https://images.unsplash.com/photo-1603048297172-c92544798d5a?q=80&w=500&auto=format&fit=crop' },
   { id: 'beef', name: 'Beef', nameUr: 'بیف', icon: 'Drumstick', image: 'https://images.unsplash.com/photo-1588168333986-5078d3ae3976?q=80&w=500&auto=format&fit=crop' },
   { id: 'chicken', name: 'Chicken', nameUr: 'چکن', icon: 'Bird', image: 'https://images.unsplash.com/photo-1587593810167-a84920ea0781?q=80&w=500&auto=format&fit=crop' },
-  { id: 'fish', name: 'Fish', nameUr: 'مچھلی', icon: 'Fish', image: 'https://images.unsplash.com/photo-1534604973900-c43ab4c2e0ab?q=80&w=500&auto=format&fit=crop' },
 ];
 
 export const INITIAL_DEALS: Deal[] = [
@@ -35,16 +36,6 @@ export const INITIAL_DEALS: Deal[] = [
     discount: 'Special',
     discountUr: 'خصوصی',
     image: 'https://images.unsplash.com/photo-1529692236671-f1f6e9460272?q=80&w=1000&auto=format&fit=crop'
-  },
-  {
-    id: 'deal2',
-    title: 'Bulk Fish Order',
-    titleUr: 'مچھلی کا بڑا آرڈر',
-    description: 'Flat 10% off on wholesale fish orders above 20pcs',
-    descriptionUr: '20 عدد سے زیادہ مچھلی کے ہول سیل آرڈر پر 10 فیصد رعایت',
-    discount: '10% OFF',
-    discountUr: '10% رعایت',
-    image: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?q=80&w=1000&auto=format&fit=crop'
   }
 ];
 
@@ -94,11 +85,6 @@ export const INITIAL_PRODUCTS: Product[] = [
   { id: 'c9', name: 'Chicken Karahi Cut', nameUr: 'چکن کڑاہی کٹ', description: 'Perfectly sized pieces for Chicken Karahi.', descriptionUr: 'چکن کڑاہی کے لیے بہترین سائز کے ٹکڑے۔', price: 1100, unit: 'kg', unitUr: 'کلو', category: 'chicken', image: 'https://images.unsplash.com/photo-1587593810167-a84920ea0781?q=80&w=500&auto=format&fit=crop' },
   { id: 'c10', name: 'Chicken Biryani Cut', nameUr: 'چکن بریانی کٹ', description: 'Ideal bone-in pieces for Chicken Biryani.', descriptionUr: 'چکن بریانی کے لیے بہترین ہڈی والے ٹکڑے۔', price: 1100, unit: 'kg', unitUr: 'کلو', category: 'chicken', image: 'https://images.unsplash.com/photo-1587593810167-a84920ea0781?q=80&w=500&auto=format&fit=crop' },
   { id: 'c11', name: 'Chicken Neck', nameUr: 'چکن گردن', description: 'Bony chicken neck pieces.', descriptionUr: 'چکن کی گردن کے ٹکڑے۔', price: 1000, unit: 'kg', unitUr: 'کلو', category: 'chicken', image: 'https://images.unsplash.com/photo-1587593810167-a84920ea0781?q=80&w=500&auto=format&fit=crop' },
-  
-  // Fish
-  { id: 'f1', name: 'Whole Fish (Rohu)', nameUr: 'ثابت مچھلی (روہو)', description: 'Freshwater fish for wholesale.', descriptionUr: 'ہول سیل کے لیے تازہ مچھلی۔', price: 2500, unit: '10 pcs', unitUr: '10 عدد', category: 'fish', image: 'https://images.unsplash.com/photo-1534604973900-c43ab4c2e0ab?q=80&w=500&auto=format&fit=crop', wholesaleOnly: true },
-  { id: 'f2', name: 'Fish Fillet', nameUr: 'فش فلے', description: 'Large scale clean fillets.', descriptionUr: 'صاف شدہ فلے۔', price: 5000, unit: '10 kg', unitUr: '10 کلو', category: 'fish', image: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?q=80&w=500&auto=format&fit=crop', wholesaleOnly: true },
-  { id: 'f3', name: 'Fish Steak', nameUr: 'فش اسٹیک', description: 'Standard cuts for bulk catering.', descriptionUr: 'بڑے آرڈرز کے لیے فش اسٹیک۔', price: 4500, unit: '10 kg', unitUr: '10 کلو', category: 'fish', image: 'https://images.unsplash.com/photo-1526318896980-cf78c088247c?q=80&w=500&auto=format&fit=crop', wholesaleOnly: true },
 ];
 
 
@@ -117,7 +103,6 @@ export const TRANSLATIONS = {
     since: "Since",
     guidelines: "Ordering Guidelines",
     minOrderMutton: "Mutton delivery: Minimum",
-    fishBulk: "Fish: Bulk/Wholesale orders only",
     deals: "Today's Deals",
     all: "ALL",
     pricing: "Pricing",
@@ -142,6 +127,9 @@ export const TRANSLATIONS = {
     accountTitle: "Account Title",
     accountNumber: "Account Number",
     bankName: "Bank Name",
+    netWeight: "Net weight: 1kg",
+    perKg: "per kg",
+    pricingDisclaimer: "All rates mentioned are for 1kg net weight",
   },
   ur: {
     home: "ہوم",
@@ -157,7 +145,6 @@ export const TRANSLATIONS = {
     since: "سے",
     guidelines: "آرڈر کے قواعد",
     minOrderMutton: "مٹن ڈیلیوری: کم از کم",
-    fishBulk: "مچھلی: صرف بلک / ہول سیل آرڈرز",
     deals: "آج کی ڈیلز",
     all: "سب",
     pricing: "قیمت",
@@ -182,5 +169,8 @@ export const TRANSLATIONS = {
     accountTitle: "اکاؤنٹ کا عنوان",
     accountNumber: "اکاؤنٹ نمبر",
     bankName: "بینک کا نام",
+    netWeight: "نیٹ وزن: 1 کلو",
+    perKg: "فی کلو",
+    pricingDisclaimer: "تمام قیمتیں 1 کلو نیٹ وزن کے لیے ہیں",
   }
 };

@@ -25,19 +25,22 @@ import { AppConfig, Category, Deal, Product, CartItem } from './types';
 import { ChatBot } from './components/ChatBot';
 
 // Components
-const Navbar = ({ onSearch, isEditMode, toggleEditMode, language, setLanguage, t }: { onSearch: (q: string) => void, isEditMode: boolean, toggleEditMode: () => void, language: 'en' | 'ur', setLanguage: (l: 'en' | 'ur') => void, t: any }) => {
+const Navbar = ({ onSearch, isEditMode, toggleEditMode, language, setLanguage, t, logoUrl }: { onSearch: (q: string) => void, isEditMode: boolean, toggleEditMode: () => void, language: 'en' | 'ur', setLanguage: (l: 'en' | 'ur') => void, t: any, logoUrl: string }) => {
   return (
     <nav className="sticky top-0 z-50 bg-white border-b border-gray-100 px-4 py-3 flex items-center justify-between">
       <div className="flex items-center gap-2">
         <div 
-          className="w-10 h-10 bg-brand-blue rounded-lg flex items-center justify-center text-white font-bold text-xl cursor-pointer"
+          className={`w-10 h-10 rounded-lg flex items-center justify-center cursor-pointer overflow-hidden border border-gray-100 shadow-sm ${logoUrl ? 'bg-white' : 'bg-brand-blue text-white font-bold text-xl'}`}
           onDoubleClick={toggleEditMode}
         >
-          D
+          {logoUrl ? (
+            <img src={logoUrl} alt="Logo" className="w-full h-full object-contain p-0.5" />
+          ) : (
+            'D'
+          )}
         </div>
         <div>
-          <h1 className="text-sm font-bold leading-tight">{language === 'ur' ? 'دہلی مٹن' : 'DEHLI MUTTON'}</h1>
-          <p className="text-[10px] text-gray-500 font-medium">{language === 'ur' ? 'بیف سینٹر' : 'BEEF CENTER'}</p>
+          <h1 className="text-xs font-black leading-tight uppercase italic tracking-tight">{language === 'ur' ? 'دہلی مٹن اینڈ بیف' : 'DEHLI MUTTON & BEEF'}</h1>
         </div>
       </div>
       <div className="flex items-center gap-2">
@@ -231,6 +234,7 @@ export default function App() {
         language={language}
         setLanguage={setLanguage}
         t={t}
+        logoUrl={config.logoUrl}
       />
       
       <main className="px-4 py-6">
@@ -256,6 +260,39 @@ export default function App() {
 
       <ChatBot config={config} products={products} language={language} />
 
+      {/* Floating WhatsApp Button */}
+      <motion.a 
+        href={`https://wa.me/${config.whatsappNumber.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(
+          'Salam, I want to order from Dehli Mutton & Beef.'
+        )}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={{ 
+          scale: [1, 1.05, 1],
+          opacity: 1,
+          boxShadow: [
+            "0 10px 25px -5px rgba(37, 211, 102, 0.4)",
+            "0 20px 25px -5px rgba(37, 211, 102, 0.6)",
+            "0 10px 25px -5px rgba(37, 211, 102, 0.4)"
+          ]
+        }}
+        transition={{ 
+          scale: { duration: 2, repeat: Infinity, ease: "easeInOut" },
+          boxShadow: { duration: 2, repeat: Infinity, ease: "easeInOut" },
+          opacity: { duration: 0.3 }
+        }}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        className="fixed bottom-24 left-4 bg-[#25D366] w-14 h-14 rounded-full shadow-2xl z-40 border-4 border-white outline outline-green-600/30 flex items-center justify-center overflow-hidden"
+      >
+        <img 
+          src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" 
+          alt="WhatsApp" 
+          className="w-8 h-8"
+        />
+      </motion.a>
+
       {/* Product Detail Modal */}
       <AnimatePresence>
         {selectedProduct && (
@@ -276,10 +313,10 @@ export default function App() {
       {isEditMode && (
         <button 
           onClick={saveAll}
-          className="fixed bottom-24 left-4 bg-green-600 text-white p-4 rounded-full shadow-lg z-[60] flex items-center gap-2 font-bold"
+          className="fixed bottom-24 left-1/2 -translate-x-1/2 bg-brand-blue text-white px-6 py-3 rounded-full shadow-2xl z-[60] flex items-center gap-2 font-black text-xs border-4 border-white outline outline-brand-gold/30 active:scale-95 transition-transform"
         >
-          <Save size={20} />
-          SAVE CHANGES
+          <Save size={18} />
+          {language === 'ur' ? 'تبدیلیاں محفوظ کریں' : 'SAVE CHANGES'}
         </button>
       )}
     </div>
@@ -292,36 +329,37 @@ const HomeView = ({ config, deals, products, onProductClick, onCategoryClick, is
   return (
     <div className="space-y-8">
       {/* Hero Banner */}
-      <section className="relative rounded-2xl overflow-hidden bg-black text-white h-56 flex items-center px-6">
+      <section className="relative rounded-3xl overflow-hidden bg-gray-900 h-[400px] flex items-center justify-center md:justify-start shadow-2xl border border-white/10 group">
         <img 
-          src="https://images.unsplash.com/photo-1553163147-622ab577d898?q=80&w=1000&auto=format&fit=crop" 
-          className="absolute inset-0 w-full h-full object-cover opacity-60"
-          alt="Banner"
+          src={config.bannerUrl} 
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          alt="Dehli Mutton & Beef Shop Front"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
-        <div className="relative z-10 space-y-3">
-          <div className="flex items-center gap-2">
-            <div className="w-1.5 h-6 bg-brand-gold rounded-full" />
-            <span className="text-[10px] font-black tracking-[0.2em] uppercase text-brand-gold">{t.since} 1985</span>
-          </div>
-          <h2 className="text-3xl font-black tracking-tight leading-[0.9] italic uppercase">
-            {language === 'ur' ? config.businessNameUr : 'DEHLI'} <br/> <span className="text-brand-gold">{language === 'ur' ? '' : 'MUTTON & BEEF'}</span>
-          </h2>
-          <p className="text-[10px] font-bold opacity-90 tracking-wide">
-            {language === 'ur' ? config.taglineUr : config.tagline}
-          </p>
-          <div className="flex gap-2">
-            <button className="bg-white text-black px-5 py-2.5 rounded-xl text-xs font-black flex items-center gap-2 group transition-transform active:scale-95 shadow-lg uppercase">
-              {t.home} <ChevronRight size={14} className={`${language === 'ur' ? 'rotate-180' : ''} group-hover:translate-x-1 transition-transform`} />
+        
+        {/* Floating Action Buttons Area */}
+        <div className="absolute bottom-8 left-0 right-0 z-10 flex justify-center px-4">
+          <div className="flex gap-4 p-3 bg-black/40 backdrop-blur-xl rounded-2xl border border-white/20 shadow-2xl">
+            <button 
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="bg-brand-gold text-white px-6 py-3 rounded-xl text-[10px] font-black flex items-center gap-2 transition-all active:scale-95 shadow-lg uppercase hover:brightness-110"
+            >
+              {t.home} <ChevronRight size={14} className={language === 'ur' ? 'rotate-180' : ''} />
             </button>
             <button 
               onClick={() => document.getElementById('deals-section')?.scrollIntoView({ behavior: 'smooth' })}
-              className="bg-black/20 backdrop-blur-md text-white border border-white/20 px-5 py-2.5 rounded-xl text-xs font-black flex items-center gap-2 group transition-transform active:scale-95 uppercase"
+              className="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/20 px-6 py-3 rounded-xl text-[10px] font-black flex items-center gap-2 transition-all active:scale-95 uppercase"
             >
               {t.deals}
             </button>
           </div>
         </div>
+
+        {/* Brand Badge - Moved to top corner to avoid blocking the shop front */}
+        {config.logoUrl && (
+          <div className="absolute top-6 right-6 w-16 h-16 bg-white/10 backdrop-blur-md rounded-2xl p-2 shadow-lg border border-white/20 hidden md:flex items-center justify-center animate-float">
+            <img src={config.logoUrl} alt="Logo Badge" className="w-full h-full object-contain filter drop-shadow-md" />
+          </div>
+        )}
       </section>
 
       {/* Features */}
@@ -396,9 +434,10 @@ const HomeView = ({ config, deals, products, onProductClick, onCategoryClick, is
         <h3 className="font-bold text-gray-900">{language === 'ur' ? 'بہترین انتخاب' : 'Top Picks'}</h3>
         <div className="grid grid-cols-2 gap-4">
           {products.map((p: Product) => (
-            <ProductCard key={p.id} product={p} onClick={() => onProductClick(p)} isEditMode={isEditMode} currency={config.currency} language={language} />
+            <ProductCard key={p.id} product={p} onClick={() => onProductClick(p)} isEditMode={isEditMode} currency={config.currency} language={language} t={t} />
           ))}
         </div>
+        <p className="text-[10px] text-gray-400 text-center italic py-2">{t.pricingDisclaimer}</p>
       </section>
 
       {/* Business Rules Banner */}
@@ -413,10 +452,6 @@ const HomeView = ({ config, deals, products, onProductClick, onCategoryClick, is
           <li className="flex items-start gap-2 opacity-80">
             <div className={`w-1.5 h-1.5 rounded-full bg-brand-gold mt-1 ${language === 'ur' ? 'ml-2' : ''}`} />
             <span>{t.minOrderMutton} <strong>{config.minOrderMutton} {language === 'ur' ? 'کلو' : 'kg'}</strong></span>
-          </li>
-          <li className="flex items-start gap-2 opacity-80">
-            <div className={`w-1.5 h-1.5 rounded-full bg-brand-gold mt-1 ${language === 'ur' ? 'ml-2' : ''}`} />
-            <span>{t.fishBulk}</span>
           </li>
         </ul>
       </section>
@@ -447,7 +482,7 @@ const CategoriesView = ({ products, selectedCategory, setSelectedCategory, onPro
         ))}
       </div>
 
-      <div className="grid grid-cols-2 gap-4 pb-20">
+      <div className="grid grid-cols-2 gap-4 pb-10">
         {filtered.map((p: Product) => (
           <ProductCard 
             key={p.id} 
@@ -457,9 +492,11 @@ const CategoriesView = ({ products, selectedCategory, setSelectedCategory, onPro
             isEditMode={isEditMode}
             currency={config.currency}
             language={language}
+            t={t}
           />
         ))}
       </div>
+      <p className="text-[10px] text-gray-400 text-center italic pb-24">{t.pricingDisclaimer}</p>
     </div>
   );
 };
@@ -644,6 +681,24 @@ const ContactView = ({ config, setConfig, isEditMode, language, t }: any) => {
               />
             </div>
             <div>
+              <label className="text-[10px] font-bold text-gray-400 uppercase">Banner URL</label>
+              <input 
+                value={config.bannerUrl} 
+                onChange={(e) => setConfig({ ...config, bannerUrl: e.target.value })}
+                className="text-sm font-bold text-gray-900 w-full bg-gray-50 p-2 rounded mt-1"
+                placeholder="https://...image.jpg"
+              />
+            </div>
+            <div>
+              <label className="text-[10px] font-bold text-gray-400 uppercase">Logo URL</label>
+              <input 
+                value={config.logoUrl} 
+                onChange={(e) => setConfig({ ...config, logoUrl: e.target.value })}
+                className="text-sm font-bold text-gray-900 w-full bg-gray-50 p-2 rounded mt-1"
+                placeholder="https://...logo.png"
+              />
+            </div>
+            <div>
               <label className="text-[10px] font-bold text-gray-400 uppercase">AI Bot Instruction</label>
               <textarea 
                 value={config.botInstruction} 
@@ -698,16 +753,21 @@ const ContactView = ({ config, setConfig, isEditMode, language, t }: any) => {
 
 // --- Sub-components ---
 
-const ProductCard = ({ product, onClick, onAdd, isEditMode, currency, language }: any) => {
+const ProductCard = ({ product, onClick, onAdd, isEditMode, currency, language, t }: any) => {
   return (
     <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 flex flex-col group hover:shadow-md transition-shadow relative">
       <div className="h-28 overflow-hidden relative" onClick={onClick}>
         <img src={product.image} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt={product.name} />
-        {product.tag && (
-          <span className="absolute top-2 left-2 bg-brand-gold text-white text-[8px] font-black px-1.5 py-0.5 rounded uppercase tracking-tighter shadow-sm">
-            {language === 'ur' ? product.tagUr : product.tag}
+        <div className="absolute top-2 left-2 flex flex-col gap-1">
+          {product.tag && (
+            <span className="bg-brand-gold text-white text-[8px] font-black px-1.5 py-0.5 rounded uppercase tracking-tighter shadow-sm w-fit">
+              {language === 'ur' ? product.tagUr : product.tag}
+            </span>
+          )}
+          <span className="bg-green-600 text-white text-[8px] font-black px-1.5 py-0.5 rounded uppercase tracking-tighter shadow-sm w-fit">
+            {t.netWeight}
           </span>
-        )}
+        </div>
         {product.wholesaleOnly && (
            <span className={`absolute bottom-2 left-2 bg-black text-white text-[8px] font-black px-1.5 py-0.5 rounded uppercase tracking-tighter opacity-90 shadow-sm ${language === 'ur' ? 'right-2 left-auto' : ''}`}>
             {language === 'ur' ? 'ہول سیل' : 'Wholesale'}
@@ -720,10 +780,14 @@ const ProductCard = ({ product, onClick, onAdd, isEditMode, currency, language }
           <p className="text-[9px] text-gray-500 line-clamp-1">{language === 'ur' ? product.descriptionUr : product.description}</p>
         </div>
         <div className="flex items-center justify-between pt-2">
-          <p className="text-xs font-black text-gray-900 flex items-center">
-            <span className="text-[10px] font-bold text-brand-gold">{currency}</span>
-            {product.price}
-            <span className="text-[8px] text-gray-400 font-medium ml-0.5">/{language === 'ur' ? product.unitUr : product.unit}</span>
+          <p className="text-xs font-black text-gray-900 flex flex-col">
+            <span className="flex items-center">
+              <span className="text-[10px] font-bold text-brand-gold">{currency}</span>
+              {product.price}
+            </span>
+            <span className="text-[7px] text-gray-400 font-bold uppercase tracking-tighter">
+              {t.perKg}
+            </span>
           </p>
           <button 
             onClick={(e) => { e.stopPropagation(); onAdd && onAdd(); }}
@@ -841,8 +905,9 @@ const ProductDetailModal = ({ product, onClose, onAddToCart, isEditMode, onUpdat
                     <p className="text-xl font-black text-brand-blue flex items-center">
                       <span className={`text-sm border-gray-200 ${language === 'ur' ? 'border-l pl-1.5 ml-1.5' : 'border-r pr-1.5 mr-1.5'}`}>{config.currency}</span>
                       {product.price}
-                      <span className="text-xs text-gray-400 font-medium mx-1 tracking-tight">/ {t.per} {language === 'ur' ? product.unitUr.toUpperCase() : product.unit.toUpperCase()}</span>
+                      <span className="text-xs text-brand-gold font-black mx-1 tracking-tight">/ {t.perKg.toUpperCase()}</span>
                     </p>
+                    <p className="text-[10px] text-green-600 font-bold uppercase tracking-tight italic">{t.netWeight}</p>
                   </div>
                   <div className="flex items-center gap-4 bg-white px-3 py-2 rounded-xl shadow-sm border border-gray-100">
                     <button onClick={() => qty > 1 && setQty(qty - 1)} className="p-1 text-gray-400 hover:text-brand-blue"><Minus size={18} /></button>

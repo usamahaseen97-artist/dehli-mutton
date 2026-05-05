@@ -116,10 +116,26 @@ export const ChatBot: React.FC<ChatBotProps> = ({ config, products, language }) 
       <motion.button
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
+        animate={{ 
+          scale: [1, 1.05, 1],
+          boxShadow: [
+            "0 10px 25px -5px rgba(0, 114, 206, 0.4)",
+            "0 20px 25px -5px rgba(0, 114, 206, 0.6)",
+            "0 10px 25px -5px rgba(0, 114, 206, 0.4)"
+          ]
+        }}
+        transition={{ 
+          scale: { duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.5 },
+          boxShadow: { duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.5 }
+        }}
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-24 right-4 bg-brand-blue text-white p-4 rounded-full shadow-2xl z-40 border-4 border-white outline outline-brand-gold/30"
+        className="fixed bottom-24 right-4 bg-white p-2.5 rounded-full shadow-2xl z-40 border-4 border-white outline outline-brand-blue/20 w-14 h-14 flex items-center justify-center overflow-hidden"
       >
-        <MessageCircle size={24} />
+        <img 
+          src="https://cdn-icons-png.flaticon.com/512/4712/4712035.png" 
+          alt="AI Bot" 
+          className="w-full h-full object-contain"
+        />
       </motion.button>
 
       {/* Chat Window */}

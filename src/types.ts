@@ -48,6 +48,8 @@ export interface AppConfig {
   bankName: string;
   accountNumber: string;
   accountTitle: string;
+  bannerUrl: string;
+  logoUrl: string;
   botInstruction?: string;
 }
 
